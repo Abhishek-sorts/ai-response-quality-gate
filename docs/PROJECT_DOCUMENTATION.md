@@ -80,8 +80,9 @@ This Proof of Concept (POC) implements an **AI Response Quality Gate** — a rel
 
 ---
 
+
 ## 3. System Architecture
-## 3. System Architecture
+```text
 User (React Debugger)
 ↓
 FastAPI Backend (/api/execute)
@@ -99,39 +100,38 @@ Orchestrator
 │     ├── Fallback Model
 │     └── Abort
 └── Trace + Latency + History (SQLite)
-text---
+```
+
 
 ## 4. Project Folder Structure
+
+```text
 ai-response-quality-gate/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py              # FastAPI app + endpoints
-│   │   ├── orchestrator.py      # Main pipeline & recovery loop
-│   │   ├── validators.py        # Schema validation + LLM-as-Judge
-│   │   ├── llm_clients.py       # Gemini, Groq, OpenRouter clients
-│   │   ├── recovery.py          # Failure classification + strategies + Response Repair
-│   │   ├── models.py            # Pydantic models
-│   │   ├── db.py                # SQLite history
-│   │   ├── json_guard.py        # Safe JSON parsing
-│   │   └── trace.py             # Execution trace tracker
+│   │   ├── main.py
+│   │   ├── orchestrator.py
+│   │   ├── validators.py
+│   │   ├── llm_clients.py
+│   │   ├── recovery.py
+│   │   ├── models.py
+│   │   ├── db.py
+│   │   ├── json_guard.py
+│   │   └── trace.py
 │   ├── requirements.txt
-│   └── test_*.py                # Smoke & cascade tests
+│   └── test_*.py
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── components/
-│   │   │   ├── ExecutionForm.jsx
-│   │   │   ├── DebuggerDashboard.jsx
-│   │   │   └── SchemaPresetSelect (integrated)
-│   └── package.json
+│   ├── package.json
+│   └── ...
 ├── docs/
+│   ├── PROJECT_DOCUMENTATION.md
 │   ├── model_disclosure.md
 │   ├── model_comparison.md
-│   └── APPROACH_AND_DOCUMENTATION.md (this file)
-├── .env.example
-├── .gitignore
-└── README.md
-text---
+│   └── screenshots/
+├── README.md
+└── .env.example
+```
 
 ## 5. Models Used
 
@@ -157,11 +157,11 @@ Full disclosure and comparison are available in:
 
 ---
 
-## 7. Screenshot Results Explained
+## 7. Results
 
 ### Screenshot 1: Missing Data – Anti-Hallucination
 
-![Hallucination Prevention](screenshots/Hallucination%20Prevention%20on%20Missing%20Data.png)
+![Hallucination Prevention](screenshots/hallucination-prevention.png)
 
 **Test:** Extract spaceship name and crew count from a context that explicitly says no spacecraft is mentioned.
 **Result:** Model returned null values instead of inventing data.  
@@ -170,7 +170,7 @@ Full disclosure and comparison are available in:
 
 ### Screenshot 2: Auto-Recovery – Fallback Model
 
-![Fallback Model](screenshots/falback%20model%20.png)
+![Fallback Model](screenshots/fallback-model.png)
 
 **Test:** Extract company name and employee count.
 **Result:**  
@@ -181,7 +181,7 @@ Full disclosure and comparison are available in:
 
 ### Screenshot 3: Clean Success – Golden Path
 
-![Primary Model Execution](screenshots/primary%20model%20Excecution.png)
+![Primary Model Execution](screenshots/primary-model-execution.png)
 
 **Test:** Extract company name and employee count with complete context.
 **Result:** Perfect scores (1.00 across all metrics) on first attempt.  
@@ -189,7 +189,7 @@ Full disclosure and comparison are available in:
 
 ### Screenshot 4: Schema Mismatch – Clean Abort
 
-![Schema Mismatch](screenshots/schema%20mismatch.png)
+![Schema Mismatch](screenshots/schema-mismatch.png)
 
 **Test:** Extract name, age, and city.
 **Result:**  
